@@ -1,8 +1,10 @@
 import express, { Express } from "express";
+import setupSwagger from "../src/config/swagger";
 
 const app: Express = express();
 
 app.use(express.json());
+setupSwagger(app);
 
 app.get("/api/v1/health", (req, res) => {
     res.json({
