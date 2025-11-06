@@ -1,0 +1,41 @@
+{
+  "name": "bed_capstone_project",
+  "version": "1.0.0",
+  "description": "Pre-Milestone: Project Planning and Proposal",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "test": "jest",
+    "test-watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliadimayuga/BED_Capstone_Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juliadimayuga/BED_Capstone_Project/issues"
+  },
+  "homepage": "https://github.com/juliadimayuga/BED_Capstone_Project#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "firebase-admin": "^13.6.0",
+    "joi": "^18.0.1",
+    "morgan": "^1.10.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.5",
+    "@types/joi": "^17.2.2",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
