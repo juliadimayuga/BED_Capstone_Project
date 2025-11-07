@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-export const createReviewSchema = Joi.object({
+export const createBorrowedSchema = Joi.object({
     cdId: Joi.number().required(),
     status: Joi.string().valid("borrowed", "available").required(),
     dateBorrowed: Joi.date().required(),
