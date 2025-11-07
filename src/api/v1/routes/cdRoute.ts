@@ -76,7 +76,7 @@ router.get("/cds/:id", getCdById);
  * @openapi
  * /cds:
  *   post:
- *     summary: Create a CDs
+ *     summary: Create a CD
  *     tags: [CDs]
  *     requestBody:
  *       required: true
@@ -107,7 +107,7 @@ router.post("/cds", createCd);
  * @openapi
  * /cds/{id}:
  *   put:
- *     summary: Update CD
+ *     summary: Update a CD
  *     tags: [CDs]
  *     parameters:
  *       - name: id
