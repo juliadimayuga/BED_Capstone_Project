@@ -1,5 +1,5 @@
 import express, { Express } from "express";
-import setupSwagger from "../src/config/swagger";
+import setupSwagger from "../config/swagger";
 
 const app: Express = express();
 
