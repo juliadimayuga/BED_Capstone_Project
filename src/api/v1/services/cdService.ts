@@ -51,7 +51,7 @@ export const getCdById = async (id: number): Promise<CD | null> => {
 
 /**
  * Creates a new CD
- * @param cdData - Only the fields needed to create an CD
+ * @param cdData - Only the fields needed to create a CD
  * @returns The created CD
  * @throws {Error} - If an error occurs during the CD creation
  */
@@ -106,7 +106,7 @@ export const updateCd = async (
 };
 
 /**
- * Deletes an CD
+ * Deletes a CD
  * @param id - The ID of the CD to delete
  * @returns True if the CD was deleted successfully or null if not found
  * @throws {Error} - If an error occurs during CD deletion
