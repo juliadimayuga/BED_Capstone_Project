@@ -37,12 +37,17 @@ export const createBorrowedRecord = async (borrowedData: Omit<BorrowedStatus, "i
 ): Promise<BorrowedStatus> => {
     try{
         const id = Date.now();
+        const record = {
+            ...borrowedData,
+            dateBorrowed: new Date().toISOString(),
+            dateReturned: undefined
+        };
         await firestoreRepository.createDocument(
             BORROWED_COLLECTION,
-            borrowedData,
+            record,
             id.toString()
         );
-        return {id: Number(id), ...borrowedData};
+        return {id: Number(id), ...record};
     }
     catch (error:unknown){
         const errorMessage = error instanceof Error ? error.message : "Unknown error";
@@ -70,6 +75,10 @@ export const updateBorrowedRecord = async (
             return null
         }
 
+        if (borrowedData.status === "available" && !borrowedData.dateReturned){
+            borrowedData.dateReturned = new Date().toISOString();
+        }
+        
         await firestoreRepository.updateDocument(
             BORROWED_COLLECTION,
             id.toString(),
