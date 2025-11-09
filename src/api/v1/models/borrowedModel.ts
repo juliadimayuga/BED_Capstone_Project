@@ -3,7 +3,7 @@
  */
 export interface BorrowedStatus{
     id: number;
-    cdId: string;
+    cdId: number;
     status: "borrowed" | "available";
     dateBorrowed: string;
     dateReturned?: string;
