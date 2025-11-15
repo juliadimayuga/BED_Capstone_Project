@@ -4,6 +4,7 @@ import {
     createReview,
     deleteReview
 } from "../controllers/reviewController";
+import { validateCreateReview } from "../middleware/validatorMiddleware";
 
 const router: Router = express.Router();
 
@@ -58,7 +59,7 @@ router.get("/reviews", getAllReviews);
 *                rating:
 *                  type: number
 */
-router.post("/reviews", createReview);
+router.post("/reviews", validateCreateReview, createReview);
 
 /**
  * @openapi

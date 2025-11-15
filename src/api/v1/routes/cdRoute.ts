@@ -6,6 +6,7 @@ import {
     updateCd,
     deleteCd
 } from "../controllers/cdController";
+import { validateCreateCd } from "../middleware/validatorMiddleware";
 
 const router: Router = express.Router();
 
@@ -101,7 +102,7 @@ router.get("/cds/:id", getCdById);
 *                borrowed:
 *                  type: boolean
 */
-router.post("/cds", createCd);
+router.post("/cds", validateCreateCd, createCd);
 
 /**
  * @openapi
