@@ -5,6 +5,7 @@ import {
     updateBorrowedRecord,
     deleteBorrowedRecord
 } from "../controllers/borrowedController";
+import { validateCreateBorrowed } from "../middleware/validatorMiddleware";
 
 const router: Router = express.Router();
 
@@ -67,7 +68,7 @@ router.get("/borrowed", getAllBorrowed);
 *                  type: string
 *                  format: date-time
 */
-router.post("/borrowed", createBorrowedRecord);
+router.post("/borrowed", validateCreateBorrowed, createBorrowedRecord);
 
 /**
  * @openapi
