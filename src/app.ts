@@ -1,4 +1,6 @@
 import express, { Express } from "express";
+import helmet from "helmet";
+import cors from "cors";
 import setupSwagger from "../config/swagger";
 import errorHandler from "./api/v1/middleware/errorHandler";
 import {rateLimiter} from "./api/v1/middleware/expressRateLimiter";
@@ -9,6 +11,8 @@ import borrowedRoutes from "./api/v1/routes/borrowedRoute";
 const app: Express = express();
 
 app.use(express.json());
+app.use(helmet());
+app.use(cors());
 app.use(rateLimiter);
 setupSwagger(app);
 
