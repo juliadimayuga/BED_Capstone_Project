@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import setupSwagger from "../config/swagger";
 import errorHandler from "./api/v1/middleware/errorHandler";
-
+import {rateLimiter} from "./api/v1/middleware/expressRateLimiter";
 import cdRoutes from "./api/v1/routes/cdRoute";
 import reviewRoutes from "./api/v1/routes/reviewRoute";
 import borrowedRoutes from "./api/v1/routes/borrowedRoute";
@@ -9,6 +9,7 @@ import borrowedRoutes from "./api/v1/routes/borrowedRoute";
 const app: Express = express();
 
 app.use(express.json());
+app.use(rateLimiter);
 setupSwagger(app);
 
 app.get("/api/v1/health", (req, res) => {
