@@ -25,9 +25,9 @@ app.get("/api/v1/health", (req, res) => {
     });
 });
 
-app.use("api/v1/cds", cdRoutes);
-app.use("api/v1/reviews", reviewRoutes);
-app.use("api/v1/borrowed", borrowedRoutes);
+app.use("/api/v1", cdRoutes);
+app.use("/api/v1", reviewRoutes);
+app.use("/api/v1", borrowedRoutes);
 
 app.use(errorHandler);
 
