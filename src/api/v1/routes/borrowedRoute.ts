@@ -46,28 +46,28 @@ router.get("/borrowed", getAllBorrowed);
  *     tags: [Borrowed]
  *     requestBody:
  *       required: true
-*        content:
-*          application/json:
-*            schema:
-*              type: object
-*              required:
-*                - cdId
-*                - status
-*                - dateBorrowed
-*              properties:
-*                id:
-*                  type: number
-*                cdId:
-*                  type: number
-*                status:
-*                  type: string
-*                dateBorrowed:
-*                  type: string
-*                  format: date-time
-*                dateReturned:
-*                  type: string
-*                  format: date-time
-*/
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - cdId
+ *               - status
+ *               - dateBorrowed
+ *             properties:
+ *               id:
+ *                 type: number
+ *               cdId:
+ *                 type: number
+ *               status:
+ *                 type: string
+ *               dateBorrowed:
+ *                 type: string
+ *                 format: date-time
+ *               dateReturned:
+ *                 type: string
+ *                 format: date-time
+ */
 router.post("/borrowed", validateCreateBorrowed, createBorrowedRecord);
 
 /**

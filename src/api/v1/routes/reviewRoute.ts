@@ -41,24 +41,24 @@ router.get("/reviews", getAllReviews);
  *     tags: [Reviews]
  *     requestBody:
  *       required: true
-*        content:
-*          application/json:
-*            schema:
-*              type: object
-*              required:
-*                - cdId
-*                - comment
-*                - rating
-*              properties:
-*                id:
-*                  type: number
-*                cdId:
-*                  type: number
-*                comment:
-*                  type: string
-*                rating:
-*                  type: number
-*/
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - cdId
+ *               - comment
+ *               - rating
+ *             properties:
+ *               id:
+ *                 type: number
+ *               cdId:
+ *                 type: number
+ *               comment:
+ *                 type: string
+ *               rating:
+ *                 type: number
+ */
 router.post("/reviews", validateCreateReview, createReview);
 
 /**

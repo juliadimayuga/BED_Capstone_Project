@@ -39,7 +39,7 @@ router.get("/cds", getAllCds);
 
 /**
  * @openapi
- * /cds/:id:
+ * /cds/{id}:
  *   get:
  *     summary: Retrieve a CD by it's ID
  *     tags: [CDs]
@@ -68,7 +68,7 @@ router.get("/cds", getAllCds);
  *                   type: string
  *                 borrowed:
  *                   type: boolean
- *       '200':
+ *       '404':
  *         description: CD not found
  */
 router.get("/cds/:id", getCdById);
@@ -81,27 +81,27 @@ router.get("/cds/:id", getCdById);
  *     tags: [CDs]
  *     requestBody:
  *       required: true
-*        content:
-*          application/json:
-*            schema:
-*              type: object
-*              required:
-*                - title
-*                - artist
-*                - genre
-*                - borrowed
-*              properties:
-*                id:
-*                  type: number
-*                title:
-*                  type: string
-*                artist:
-*                  type: string
-*                genre:
-*                  type: string
-*                borrowed:
-*                  type: boolean
-*/
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - artist
+ *               - genre
+ *               - borrowed
+ *             properties:
+ *               id:
+ *                 type: number
+ *               title:
+ *                 type: string
+ *               artist:
+ *                 type: string
+ *               genre:
+ *                 type: string
+ *               borrowed:
+ *                 type: boolean
+ */
 router.post("/cds", validateCreateCd, createCd);
 
 /**
