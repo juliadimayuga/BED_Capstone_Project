@@ -5,6 +5,8 @@ import {
     deleteReview
 } from "../controllers/reviewController";
 import { validateCreateReview } from "../middleware/validatorMiddleware";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
 
 const router: Router = express.Router();
 
@@ -31,7 +33,7 @@ const router: Router = express.Router();
  *                 rating:
  *                   type: number
  */
-router.get("/reviews", getAllReviews);
+router.get("/reviews", authenticate, getAllReviews);
 
 /**
  * @openapi
@@ -59,7 +61,7 @@ router.get("/reviews", getAllReviews);
  *               rating:
  *                 type: number
  */
-router.post("/reviews", validateCreateReview, createReview);
+router.post("/reviews", authenticate, validateCreateReview, createReview);
 
 /**
  * @openapi
@@ -80,6 +82,10 @@ router.post("/reviews", validateCreateReview, createReview);
  *       '404':
  *         description: Review not found
  */
-router.delete("/reviews/:id", deleteReview);
+router.delete("/reviews/:id", 
+    authenticate, 
+    isAuthorized({hasRole: ["admin"]}), 
+    deleteReview
+);
 
 export default router;
