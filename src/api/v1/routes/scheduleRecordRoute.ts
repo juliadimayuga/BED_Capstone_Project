@@ -6,6 +6,8 @@ import {
     deleteScheduleRecord
 } from "../controllers/scheduleRecordController";
 import { validateCreateScheduleRecord } from "../middleware/validatorMiddleware";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
 
 const router: Router = express.Router();
 
@@ -34,7 +36,7 @@ const router: Router = express.Router();
  *                   type: string
  *                   format: date-time
  */
-router.get("/schedules", getAllSchedules);
+router.get("/schedules", authenticate, getAllSchedules);
 
 /**
  * @openapi
@@ -64,7 +66,12 @@ router.get("/schedules", getAllSchedules);
  *                 type: string
  *                 format: date-time
  */
-router.post("/schedules", validateCreateScheduleRecord, createScheduleRecord);
+router.post("/schedules", 
+    authenticate, 
+    isAuthorized({hasRole: ["admin"]}),
+    validateCreateScheduleRecord, 
+    createScheduleRecord
+);
 
 /**
  * @openapi
@@ -101,7 +108,11 @@ router.post("/schedules", validateCreateScheduleRecord, createScheduleRecord);
  *       '404':
  *         description: Schedule record not found
  */
-router.put("/schedules/:id", updateScheduleRecord);
+router.put("/schedules/:id", 
+    authenticate, 
+    isAuthorized({hasRole: ["admin"]}),
+    updateScheduleRecord
+);
 
 /**
  * @openapi
@@ -122,6 +133,10 @@ router.put("/schedules/:id", updateScheduleRecord);
  *       '404':
  *         description: Schedule record not found
  */
-router.delete("/schedules/:id", deleteScheduleRecord);
+router.delete("/schedules/:id", 
+    authenticate, 
+    isAuthorized({hasRole: ["admin"]}),
+    deleteScheduleRecord
+);
 
 export default router;

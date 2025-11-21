@@ -4,6 +4,8 @@ import cors from "cors";
 import setupSwagger from "../config/swagger";
 import errorHandler from "./api/v1/middleware/errorHandler";
 import {rateLimiter} from "./api/v1/middleware/expressRateLimiter";
+import adminRoute from "./api/v1/routes/adminRoute"
+import userRoute from "./api/v1/routes/userRoute"
 import equipmentRoutes from "./api/v1/routes/equipmentRoute";
 import reviewRoutes from "./api/v1/routes/reviewRoute";
 import scheduleRoutes from "./api/v1/routes/scheduleRecordRoute";
@@ -25,6 +27,8 @@ app.get("/api/v1/health", (req, res) => {
     });
 });
 
+app.use("/api/v1/admin", adminRoute);
+app.use("/api/v1/user", userRoute);
 app.use("/api/v1", equipmentRoutes);
 app.use("/api/v1", reviewRoutes);
 app.use("/api/v1", scheduleRoutes);

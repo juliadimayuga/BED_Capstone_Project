@@ -7,6 +7,8 @@ import {
     deleteEquipment
 } from "../controllers/equipmentController";
 import { validateCreateEquipment } from "../middleware/validatorMiddleware";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
 
 const router: Router = express.Router();
 
@@ -35,7 +37,7 @@ const router: Router = express.Router();
  *                 hasBeenScheduled:
  *                   type: boolean
  */
-router.get("/equipment", getAllEquipment);
+router.get("/equipment", authenticate, getAllEquipment);
 
 /**
  * @openapi
@@ -71,7 +73,7 @@ router.get("/equipment", getAllEquipment);
  *       '404':
  *         description: Equipment not found
  */
-router.get("/equipment/:id", getEquipmentById);
+router.get("/equipment/:id", authenticate, getEquipmentById);
 
 /**
  * @openapi
@@ -100,7 +102,12 @@ router.get("/equipment/:id", getEquipmentById);
  *               hasBeenScheduled:
  *                 type: boolean
  */
-router.post("/equipment", validateCreateEquipment, createEquipment);
+router.post("/equipment", 
+    authenticate, 
+    isAuthorized({hasRole: ["admin"]}), 
+    validateCreateEquipment, 
+    createEquipment
+);
 
 /**
  * @openapi
@@ -132,7 +139,10 @@ router.post("/equipment", validateCreateEquipment, createEquipment);
  *       '404':
  *         description: Equipment not found
  */
-router.put("/equipment/:id", updateEquipment);
+router.put("/equipment/:id", 
+    authenticate, 
+    isAuthorized({hasRole: ["admin"]}), 
+    updateEquipment);
 
 /**
  * @openapi
@@ -153,6 +163,9 @@ router.put("/equipment/:id", updateEquipment);
  *       '404':
  *         description: Equipment not found
  */
-router.delete("/equipment/:id", deleteEquipment);
+router.delete("/equipment/:id", 
+    authenticate, 
+    isAuthorized({hasRole: ["admin"]}), 
+    deleteEquipment);
 
 export default router;
