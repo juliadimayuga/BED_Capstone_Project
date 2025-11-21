@@ -1,16 +1,25 @@
 import {Review} from "../models/reviewModel";
 import * as firestoreRepository from "../repositories/firestoreRepository";
+import { db } from "../../../../config/firebaseConfig";
 
 const REVIEWS_COLLECTION = "reviews";
 
 /**
  * Retrieves all reviews
+ * @param fieldValuePairs - An array of field-value pairs to filter on
  * @returns Array of all reviews
  * @throws {Error} - If an error occurs during retrieval of reviews
  */
-export const getAllReviews = async (): Promise<Review[]> => {
+export const getAllReviews = async (
+    fieldValuePairs: {fieldName: string; fieldValue: any}[] = []
+): Promise<Review[]> => {
     try{
-        const snapshot = await firestoreRepository.getDocuments(REVIEWS_COLLECTION);
+        let query: FirebaseFirestore.Query = db.collection(REVIEWS_COLLECTION);
+
+        fieldValuePairs.forEach(({ fieldName, fieldValue }) => {
+            query = query.where(fieldName, "==", fieldValue);
+        });
+        const snapshot = await query.get();
         const reviews: Review[] = snapshot.docs.map(doc => ({
             id: Number(doc.id), 
             ...(doc.data() as Omit<Review, "id">)
