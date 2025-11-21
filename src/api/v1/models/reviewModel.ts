@@ -3,7 +3,7 @@
  */
 export interface Review{
     id: number;
-    cdId: number;
+    equipmentId: number;
     comment: string;
     rating: number;
 }

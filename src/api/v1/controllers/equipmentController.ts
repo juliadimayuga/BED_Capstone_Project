@@ -1,76 +1,76 @@
 import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
-import { createCdSchema } from "../validators/cdValidator";
-import * as cdService from "../services/cdService";
+import { createEquipmentSchema } from "../validators/equipmentValidator";
+import * as equipmentService from "../services/equipmentService";
 import { errorResponse, successResponse } from "../models/responseModel";
 
 /**
- * Retrieves all CDs
+ * Retrieves all Equipment
  * @param req - Express request object
  * @param res - Express response object
  */
-export const getAllCds = async (req: Request, res: Response
+export const getAllEquipment = async (req: Request, res: Response
 ): Promise<void> => {
     try{
-        const cds = await cdService.getAllCds();
+        const equipment = await equipmentService.getAllEquipment();
         res.status(HTTP_STATUS.OK).json(successResponse(
-            cds, 
-            "Retrieved all CDs successfully."
+            equipment, 
+            "Retrieved all equipment successfully."
         ));
     }
     catch (error){
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(errorResponse(
             null, 
-            "Failed to retrieve CDs."
+            "Failed to retrieve equipment."
         ));
     }
 };
 
 /**
- * Retrieves a CD by ID
+ * Retrieves Equipment by ID
  * @param req - Express request object
  * @param res - Express response object
  */
-export const getCdById = async (req: Request, res: Response
+export const getEquipmentById = async (req: Request, res: Response
 ): Promise<void> => {
     try{
         const {id} = req.params;
-        const cd = await cdService.getCdById(Number(id));
-        if (cd){
+        const equipment = await equipmentService.getEquipmentById(Number(id));
+        if (equipment){
             res.status(HTTP_STATUS.OK).json(successResponse(
-                cd,
-                "CD retrieved successfully."
+                equipment,
+                "Equipment retrieved successfully."
             ));
         }
         else{
             res.status(HTTP_STATUS.NOT_FOUND).json(errorResponse(
                 null, 
-                "CD not found."
+                "Equipment not found."
             ));
         }
     }
     catch (error){
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(errorResponse(
             null,
-            "Failed to retrieve CD."
+            "Failed to retrieve equipment."
         ));
     }
 };
 
 /**
- * Creates a CD
+ * Creates Equipment
  * @param req - Express request object
  * @param res - Express response object
  */
-export const createCd = async (req: Request, res: Response
+export const createEquipment = async (req: Request, res: Response
 ): Promise<void> => {
     try{
-        const {error, value} = createCdSchema.validate(req.body);
-        const cd = await cdService.createCd(value);
-        if (cd){
+        const {error, value} = createEquipmentSchema.validate(req.body);
+        const equipment = await equipmentService.createEquipment(value);
+        if (equipment){
             res.status(HTTP_STATUS.CREATED).json(successResponse(
-                cd,
-                "CD created successfully."
+                equipment,
+                "Equipment created successfully."
             ));
         }
         else{
@@ -83,78 +83,78 @@ export const createCd = async (req: Request, res: Response
     catch (error){
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(errorResponse(
             null,
-            "Failed to create CD."
+            "Failed to create equipment."
         ));
     }
 };
 
 /**
- * Updates the CD specified
+ * Updates the Equipment specified
  * @param req - Express request object
  * @param res - Express response object
  */
-export const updateCd = async (req: Request, res: Response
+export const updateEquipment = async (req: Request, res: Response
 ): Promise<void> => {
     try{
         const {id} = req.params;
-        const {borrowed} = req.body;
-        if (typeof borrowed !== "boolean"){
+        const {hasBeenScheduled} = req.body;
+        if (typeof hasBeenScheduled !== "boolean"){
             res.status(HTTP_STATUS.BAD_REQUEST).json(errorResponse(
                 null, 
                 "Must be true or false."
             ));
             return;
         }
-        const updatedCd = 
-            await cdService.updateCd(Number(id), {borrowed});
-        if (updatedCd){
+        const updatedEquipment = 
+            await equipmentService.updateEquipment(Number(id), {hasBeenScheduled});
+        if (updatedEquipment){
             res.status(HTTP_STATUS.OK).json(successResponse(
-                updatedCd,
-                "CD updated successfully."
+                updatedEquipment,
+                "Equipment updated successfully."
             ));
         }
         else{
             res.status(HTTP_STATUS.NOT_FOUND).json(errorResponse(
                 null,
-                "CD not found."
+                "Equipment not found."
             ));
         }
     }
     catch (error){
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(errorResponse(
             null,
-            "Failed to update CD."
+            "Failed to update equipment."
         ));
     }
 };
 
 /**
- * Deletes the CD specified
+ * Deletes the Equipment specified
  * @param req - Express request object
  * @param res - Express response object
  */
-export const deleteCd = async (req: Request, res: Response
+export const deleteEquipment = async (req: Request, res: Response
 ): Promise<void> => {
     try{
         const {id} = req.params;
-        const deletedCd = await cdService.deleteCd(Number(id));
-        if (deletedCd){
+        const deletedEquipment = await equipmentService.deleteEquipment(Number(id));
+        if (deletedEquipment){
             res.status(HTTP_STATUS.OK).json(successResponse(
                 null,
-                "CD deleted successfully."
+                "Equipment deleted successfully."
             ));
         }
         else{
             res.status(HTTP_STATUS.NOT_FOUND).json(errorResponse(
                 null,
-                "CD not found"
+                "Equipment not found"
             ));
         }
     }
     catch (error){
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(errorResponse(
             null,
-            "Failed to delete CD."
+            "Failed to delete equipment."
         ));
     }
 };

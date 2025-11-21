@@ -12,14 +12,14 @@ describe('Review Service', () => {
         it('should retrieve all reviews successfully', async () => {
             // Arrange
             const mockData = [
-                {id: 100, cdId: 1, comment: "Loved this song", rating: 5},
-                {id: 101, cdId: 2, comment: "Didn't like the song", rating: 1}
+                {id: 100, equipmentId: 1, comment: "Treadmill was fast", rating: 5},
+                {id: 101, equipmentId: 2, comment: "Weights weren't heavy enough", rating: 1}
             ];
             const mockRepositoryResponse = {
                 docs: mockData.map(review => ({
                     id: review.id.toString(),
                     data: () => ({
-                        cdId: review.cdId,
+                        equipmentId: review.equipmentId,
                         comment: review.comment,
                         rating: review.rating,
                     })
@@ -40,8 +40,8 @@ describe('Review Service', () => {
         it('should create a review successfully', async () => {
             // Arrange
             const newReview = {
-                cdId: 3, 
-                comment: "Liked the song", 
+                equipmentId: 3, 
+                comment: "Liked the material", 
                 rating: 4 
             };
             (repositoryModule.createDocument as jest.Mock).mockResolvedValue("103");
@@ -64,8 +64,8 @@ describe('Review Service', () => {
             const mockReview = {
                 id: "102",
                 data: () => ({
-                    cdId: 2, 
-                    comment: "Didn't like the song", 
+                    equipmentId: 2, 
+                    comment: "Didn't like the design", 
                     rating: 1
                 })
             };

@@ -4,9 +4,9 @@ import cors from "cors";
 import setupSwagger from "../config/swagger";
 import errorHandler from "./api/v1/middleware/errorHandler";
 import {rateLimiter} from "./api/v1/middleware/expressRateLimiter";
-import cdRoutes from "./api/v1/routes/cdRoute";
+import equipmentRoutes from "./api/v1/routes/equipmentRoute";
 import reviewRoutes from "./api/v1/routes/reviewRoute";
-import borrowedRoutes from "./api/v1/routes/borrowedRoute";
+import scheduleRoutes from "./api/v1/routes/scheduleRecordRoute";
 
 const app: Express = express();
 
@@ -25,9 +25,9 @@ app.get("/api/v1/health", (req, res) => {
     });
 });
 
-app.use("/api/v1", cdRoutes);
+app.use("/api/v1", equipmentRoutes);
 app.use("/api/v1", reviewRoutes);
-app.use("/api/v1", borrowedRoutes);
+app.use("/api/v1", scheduleRoutes);
 
 app.use(errorHandler);
 

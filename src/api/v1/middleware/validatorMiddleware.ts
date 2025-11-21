@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { createCdSchema } from "../validators/cdValidator";
+import { createEquipmentSchema } from "../validators/equipmentValidator";
 import { createReviewSchema } from "../validators/reviewValidator";
-import { createBorrowedSchema } from "../validators/borrowedValidator";
+import { createScheduleRecordSchema } from "../validators/scheduleRecordValidator";
 
-export const validateCreateCd = (req: Request, res: Response, next: NextFunction) => {
-    const {error} = createCdSchema.validate(req.body, { abortEarly: false });
+export const validateCreateEquipment = (req: Request, res: Response, next: NextFunction) => {
+    const {error} = createEquipmentSchema.validate(req.body, { abortEarly: false });
 
     if (error){
         return res.status(400).json({
@@ -27,8 +27,8 @@ export const validateCreateReview = (req: Request, res: Response, next: NextFunc
     next();
 };
 
-export const validateCreateBorrowed = (req: Request, res: Response, next: NextFunction) => {
-    const {error} = createBorrowedSchema.validate(req.body, { abortEarly: false });
+export const validateCreateScheduleRecord = (req: Request, res: Response, next: NextFunction) => {
+    const {error} = createScheduleRecordSchema.validate(req.body, { abortEarly: false });
 
     if (error){
         return res.status(400).json({

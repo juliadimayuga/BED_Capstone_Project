@@ -1,27 +1,27 @@
 import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
-import { createBorrowedSchema } from "../validators/borrowedValidator";
-import * as borrowedService from "../services/borrowedService";
+import { createScheduleRecordSchema } from "../validators/scheduleRecordValidator";
+import * as scheduleService from "../services/scheduleRecordService";
 import { errorResponse, successResponse } from "../models/responseModel";
 
 /**
- * Retrieves all borrowed CDs
+ * Retrieves all schedule records
  * @param req - Express request object
  * @param res - Express response object
  */
-export const getAllBorrowed = async (req: Request, res: Response
+export const getAllSchedules = async (req: Request, res: Response
 ): Promise<void> => {
     try{
-        const borrowed = await borrowedService.getAllBorrowed();
+        const borrowed = await scheduleService.getAllSchedules();
         res.status(HTTP_STATUS.OK).json(successResponse(
             borrowed, 
-            "Retrieved all borrowed CDs successfully."
+            "Retrieved all borrowed equipment successfully."
         ));
     }
     catch (error){
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(errorResponse(
             null, 
-            "Failed to retrieve borrowed CDs."
+            "Failed to retrieve borrowed equipment."
         ));
     }
 };
@@ -31,11 +31,11 @@ export const getAllBorrowed = async (req: Request, res: Response
  * @param req - Express request object
  * @param res - Express response object
  */
-export const createBorrowedRecord = async (req: Request, res: Response
+export const createScheduleRecord = async (req: Request, res: Response
 ): Promise<void> => {
     try{
-        const {error, value} = createBorrowedSchema.validate(req.body);
-        const borrowed = await borrowedService.createBorrowedRecord(value);
+        const {error, value} = createScheduleRecordSchema.validate(req.body);
+        const borrowed = await scheduleService.createScheduleRecord(value);
         if (borrowed){
             res.status(HTTP_STATUS.CREATED).json(successResponse(
                 borrowed,
@@ -62,24 +62,18 @@ export const createBorrowedRecord = async (req: Request, res: Response
  * @param req - Express request object
  * @param res - Express response object
  */
-export const updateBorrowedRecord = async (req: Request, res: Response
+export const updateScheduleRecord = async (req: Request, res: Response
 ): Promise<void> => {
     try{
         const {id} = req.params;
-        const {status, dateBorrowed, dateReturned} = req.body;
-        if (status !== "borrowed" && status !== "available"){
-            res.status(HTTP_STATUS.BAD_REQUEST).json(errorResponse(
-                null, 
-                "Must be 'borrowed' or 'available'."
-            ));
-            return;
-        }
-        const updatedRecord = 
-            await borrowedService.updateBorrowedRecord(Number(id), {
-                status,
-                dateBorrowed,
-                dateReturned
-            });
+        const {equipmentId, startDate} = req.body;
+
+        const updatedRecord = await scheduleService.updateScheduleRecord(Number(id), 
+        {
+            equipmentId,
+            startDate
+        });
+
         if (updatedRecord){
             res.status(HTTP_STATUS.OK).json(successResponse(
                 updatedRecord,
@@ -106,11 +100,11 @@ export const updateBorrowedRecord = async (req: Request, res: Response
  * @param req - Express request object
  * @param res - Express response object
  */
-export const deleteBorrowedRecord = async (req: Request, res: Response
+export const deleteScheduleRecord = async (req: Request, res: Response
 ): Promise<void> => {
     try{
         const {id} = req.params;
-        const deletedRecord = await borrowedService.deleteBorrowedRecord(Number(id));
+        const deletedRecord = await scheduleService.deleteScheduleRecord(Number(id));
         if (deletedRecord){
             res.status(HTTP_STATUS.OK).json(successResponse(
                 null,
@@ -127,7 +121,7 @@ export const deleteBorrowedRecord = async (req: Request, res: Response
     catch (error){
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(errorResponse(
             null,
-            "Failed to delete Record."
+            "Failed to delete record."
         ));
     }
 };
