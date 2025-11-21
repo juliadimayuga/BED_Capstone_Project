@@ -1,16 +1,14 @@
-import { initializeApp, cert, ServiceAccount } from "firebase-admin/app";
+import { initializeApp, cert } from "firebase-admin/app";
 import { getFirestore, Firestore } from "firebase-admin/firestore";
 import { getAuth, Auth } from "firebase-admin/auth";
-import * as serviceAccount from "../gymServiceAccountKey.json";
+const serviceAccount = require("../gymServiceAccountKey.json");
 
 // Initialize the Firebase app with the service account credentials
-// This step is necessary before you can use any Firebase services
 initializeApp({
-    credential: cert(serviceAccount as ServiceAccount),
+    credential: cert(serviceAccount),
 });
 
-// Get a reference to the Firestore service
-// This creates a Firestore instance that you can use to interact with your database
+// Get a reference to Firestore
 const db: Firestore = getFirestore();
 const auth: Auth = getAuth();
 
