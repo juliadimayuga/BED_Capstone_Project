@@ -7,18 +7,18 @@ import Joi from "joi";
  *     Review:
  *       type: object
  *       required:
- *         - cdId
+ *         - equipmentId
  *         - comment
  *         - rating
  *       properties:
- *         cdId:
+ *         equipmentId:
  *           type: integer
  *           example: 123
  *         comment:
  *           type: string
  *           minLength: 2
  *           maxLength: 100
- *           example: "I love this song!"
+ *           example: "Treadmill is very fast."
  *         rating:
  *           type: integer
  *           minimum: 1
@@ -26,7 +26,7 @@ import Joi from "joi";
  *           example: 5
  */
 export const createReviewSchema = Joi.object({
-    cdId: Joi.number().required(),
+    equipmentId: Joi.number().required(),
     comment: Joi.string().min(2).max(100).required(),
     rating: Joi.number().min(1).max(5).required()
 });

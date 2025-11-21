@@ -1,24 +1,24 @@
 import express, {Router} from "express";
 import {
-    getAllCds,
-    getCdById,
-    createCd,
-    updateCd,
-    deleteCd
-} from "../controllers/cdController";
-import { validateCreateCd } from "../middleware/validatorMiddleware";
+    getAllEquipment,
+    getEquipmentById,
+    createEquipment,
+    updateEquipment,
+    deleteEquipment
+} from "../controllers/equipmentController";
+import { validateCreateEquipment } from "../middleware/validatorMiddleware";
 
 const router: Router = express.Router();
 
 /**
  * @openapi
- * /cds:
+ * /equipment:
  *   get:
- *     summary: Retrieve all CDs
- *     tags: [CDs]
+ *     summary: Retrieve all equipment
+ *     tags: [Equipment]
  *     responses:
  *       '200':
- *         description: CDs retrieved successfully
+ *         description: Equipment retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -26,33 +26,33 @@ const router: Router = express.Router();
  *               properties:
  *                 id:
  *                   type: number
- *                 title:
+ *                 name:
  *                   type: string
- *                 artist:
+ *                 brand:
  *                   type: string
- *                 genre:
+ *                 type:
  *                   type: string
- *                 borrowed:
+ *                 hasBeenScheduled:
  *                   type: boolean
  */
-router.get("/cds", getAllCds);
+router.get("/equipment", getAllEquipment);
 
 /**
  * @openapi
- * /cds/{id}:
+ * /equipment/{id}:
  *   get:
- *     summary: Retrieve a CD by it's ID
- *     tags: [CDs]
+ *     summary: Retrieve an equipment item by its ID
+ *     tags: [Equipment]
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
  *         schema:
  *           type: number
- *         description: The specific CD's ID
+ *         description: The specific equipment's ID
  *     responses:
  *       '200':
- *         description: CD retrieved successfully
+ *         description: Equipment retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -60,25 +60,25 @@ router.get("/cds", getAllCds);
  *               properties:
  *                 id:
  *                   type: number
- *                 title:
+ *                 name:
  *                   type: string
- *                 artist:
+ *                 brand:
  *                   type: string
- *                 genre:
+ *                 type:
  *                   type: string
- *                 borrowed:
+ *                 hasBeenScheduled:
  *                   type: boolean
  *       '404':
- *         description: CD not found
+ *         description: Equipment not found
  */
-router.get("/cds/:id", getCdById);
+router.get("/equipment/:id", getEquipmentById);
 
 /**
  * @openapi
- * /cds:
+ * /equipment:
  *   post:
- *     summary: Create a CD
- *     tags: [CDs]
+ *     summary: Create an equipment item
+ *     tags: [Equipment]
  *     requestBody:
  *       required: true
  *       content:
@@ -86,37 +86,35 @@ router.get("/cds/:id", getCdById);
  *           schema:
  *             type: object
  *             required:
- *               - title
- *               - artist
- *               - genre
- *               - borrowed
+ *               - name
+ *               - brand
+ *               - type
+ *               - hasBeenScheduled
  *             properties:
- *               id:
- *                 type: number
- *               title:
+ *               name:
  *                 type: string
- *               artist:
+ *               brand:
  *                 type: string
- *               genre:
+ *               type:
  *                 type: string
- *               borrowed:
+ *               hasBeenScheduled:
  *                 type: boolean
  */
-router.post("/cds", validateCreateCd, createCd);
+router.post("/equipment", validateCreateEquipment, createEquipment);
 
 /**
  * @openapi
- * /cds/{id}:
+ * /equipment/{id}:
  *   put:
- *     summary: Update a CD
- *     tags: [CDs]
+ *     summary: Update an equipment item
+ *     tags: [Equipment]
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
  *         schema:
  *           type: number
- *         description: The ID of the specific CD to update
+ *         description: The ID of the specific equipment to update
  *     requestBody:
  *       required: true
  *       content:
@@ -124,37 +122,37 @@ router.post("/cds", validateCreateCd, createCd);
  *           schema:
  *             type: object
  *             required:
- *               - borrowed
+ *               - hasBeenScheduled
  *             properties:
- *               borrowed:
+ *               hasBeenScheduled:
  *                 type: boolean
  *     responses:
  *       '200':
- *         description: CD updated successfully
+ *         description: Equipment updated successfully
  *       '404':
- *         description: CD not found
+ *         description: Equipment not found
  */
-router.put("/cds/:id", updateCd);
+router.put("/equipment/:id", updateEquipment);
 
 /**
  * @openapi
- * /cds/{id}:
+ * /equipment/{id}:
  *   delete:
- *     summary: Delete a CD
- *     tags: [CDs]
+ *     summary: Delete an equipment item
+ *     tags: [Equipment]
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
  *         schema:
  *           type: number
- *         description: The ID of the specific CD to delete
+ *         description: The ID of the specific equipment to delete
  *     responses:
  *       '200':
- *         description: CD deleted successfully
+ *         description: Equipment deleted successfully
  *       '404':
- *         description: CD not found
+ *         description: Equipment not found
  */
-router.delete("/cds/:id", deleteCd);
+router.delete("/equipment/:id", deleteEquipment);
 
 export default router;
