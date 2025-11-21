@@ -12,7 +12,11 @@ import { errorResponse, successResponse } from "../models/responseModel";
 export const getAllEquipment = async (req: Request, res: Response
 ): Promise<void> => {
     try{
-        const equipment = await equipmentService.getAllEquipment();
+        const fieldValuePairs: {fieldName: string; fieldValue: any}[] = [];
+        for (const field in req.query){
+            fieldValuePairs.push({fieldName: field, fieldValue: req.query[field]});
+        }
+        const equipment = await equipmentService.getAllEquipment(fieldValuePairs);
         res.status(HTTP_STATUS.OK).json(successResponse(
             equipment, 
             "Retrieved all equipment successfully."

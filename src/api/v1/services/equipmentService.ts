@@ -1,16 +1,25 @@
 import {Equipment} from "../models/equipmentModel";
 import * as firestoreRepository from "../repositories/firestoreRepository";
+import { db } from "../../../../config/firebaseConfig";
 
 const EQUIPMENT_COLLECTION = "equipment";
 
 /**
  * Retrieves all equipment
+ * @param fieldValuePairs - An array of field-value pairs to filter on
  * @returns Array of all equipment
  * @throws {Error} - If an error occurs during retrieval of equipment
  */
-export const getAllEquipment = async (): Promise<Equipment[]> => {
+export const getAllEquipment = async (
+    fieldValuePairs: {fieldName: string; fieldValue: any}[] = []
+): Promise<Equipment[]> => {
     try{
-        const snapshot = await firestoreRepository.getDocuments(EQUIPMENT_COLLECTION);
+        let query: FirebaseFirestore.Query = db.collection(EQUIPMENT_COLLECTION);
+
+        fieldValuePairs.forEach(({ fieldName, fieldValue }) => {
+            query = query.where(fieldName, "==", fieldValue);
+        });
+        const snapshot = await query.get();
         const equipment: Equipment[] = snapshot.docs.map(doc => ({
             id: Number(doc.id), 
             ...(doc.data() as Omit<Equipment, "id">)

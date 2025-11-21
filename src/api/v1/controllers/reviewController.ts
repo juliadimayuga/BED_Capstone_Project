@@ -12,7 +12,15 @@ import { errorResponse, successResponse } from "../models/responseModel";
 export const getAllReviews = async (req: Request, res: Response
 ): Promise<void> => {
     try{
-        const reviews = await reviewService.getAllReviews();
+        const fieldValuePairs: {fieldName: string; fieldValue: any}[] = [];
+        for (const field in req.query){
+            let value: any = req.query[field];
+            if(field === "rating"){
+                value = Number(value);
+            }
+            fieldValuePairs.push({fieldName: field, fieldValue: value});
+        }
+        const reviews = await reviewService.getAllReviews(fieldValuePairs);
         res.status(HTTP_STATUS.OK).json(successResponse(
             reviews, 
             "Retrieved all reviews successfully."
